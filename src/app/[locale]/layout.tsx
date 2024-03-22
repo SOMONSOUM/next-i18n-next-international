@@ -18,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang={locale}>
+    <html lang="en">
       <body className={inter.className}>
         <I18nProviderClient locale={locale}>{children}</I18nProviderClient>
       </body>
