@@ -1,13 +1,8 @@
-import { LangButton } from "@/components/LangButton";
+import { LangButton } from "@/components/LangButton/LangButton";
 import { getI18n, getScopedI18n } from "@/locales/server";
+import { LocaleParams } from "@/types";
 
-type Props = {
-  params: { locale: "km" | "en" };
-};
-
-export default async function Home({ params }: Props) {
-  const { locale } = params;
-
+export default async function Home({ params: { locale } }: LocaleParams) {
   const t = await getI18n();
   const scopedT = await getScopedI18n("home.hello");
   const aboutT = await getScopedI18n("about");
@@ -15,7 +10,6 @@ export default async function Home({ params }: Props) {
   return (
     <div>
       <p>{t("home.hello")}</p>
-
       <p>{t("home.hello.world")}</p>
       <p>{scopedT("world")}</p>
       <p>{aboutT("title")}</p>
