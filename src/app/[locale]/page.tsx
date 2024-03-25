@@ -1,27 +1,32 @@
 "use client";
 
-import { LangButton } from "@/components/LangButton/LangButton";
 import { Button } from "@/components/ui/button";
-import { useI18n } from "@/locales/client";
 import { LocaleParams } from "@/types";
-import { ArrowRightCircle } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useState } from "react";
 
-export default async function Home({ params: { locale } }: LocaleParams) {
-  const t = useI18n();
-  const router = useRouter();
+export default function Home({ params: { locale } }: LocaleParams) {
+  const [name, setName] = useState("");
+  const isRequired = name.length < 10;
+
+  const hanndleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(name);
+  };
 
   return (
-    <div>
-      <Button onClick={() => router.push("/about")}>
-        Go <ArrowRightCircle />
-      </Button>
-      <p>{t("home.hello")}</p>
-      <p>{t("home.hello.world")}</p>
-
-      <p>{t("home.welcome", { name: "សុខ ដារ៉ា" })}</p>
-      <p>{t("home.welcome", { name: <strong>សុខ ដារ៉ា</strong> })}</p>
-      <LangButton locale={locale} />
+    <div className="container m-auto my-2">
+      <form onSubmit={hanndleSubmit} className="space-y-2">
+        <input
+          className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+          placeholder="Enter name"
+          value={name}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setName(e.target.value)
+          }
+          required={isRequired}
+        />
+        <Button type="submit">Submit</Button>
+      </form>
     </div>
   );
 }
